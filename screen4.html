@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar & To-Do List</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .phone-container {
+            width: 300px;
+            height: 600px;
+            background-color: #F6F4F1;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .container {
+            width: 100%;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .home-button {
+            background-color: #d8bfb0;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 0;
+        }
+        .home-button img {
+            width: 15px;
+            height: 15px;
+        }
+        .calendar-container, .todo-container {
+            background-color: #E3D8D0;
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .todo-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .todo-container li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .todo-container input[type="text"] {
+            border: none;
+            background-color: transparent;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+        .todo-container button {
+            border: none;
+            background-color: #d8bfb0;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 3px 5px;
+            font-size: 12px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 5px;
+            margin-top: 10px;
+        }
+        .calendar div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #d8bfb0;
+            color: white;
+            font-size: 14px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #d8bfb0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #A4978E;
+            border-radius: 5px;
+            width: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="container">
+            <div class="header">
+                <button class="home-button" onclick="goHome()">
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/home.png" alt="Home">
+                </button>
+                <h2>Calendar</h2>
+            </div>
+            <div class="todo-container">
+                <h3>Due Dates:</h3>
+                <ul id="todo-list">
+                    <li><input type="text" value="Math Worksheet - 22 March" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                    <li><input type="text" value="Biology Presentation - 27 March" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                    <li><input type="text" value="Geography Test - 1 April" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                    <li><input type="text" value="English Assignment - 10 April" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                    <li><input type="text" value="Medical Science - 16 April" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                    <li><input type="text" value="History Presentation - 20 April" readonly><button onclick="toggleComplete(this)">Ongoing...</button></li>
+                </ul>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <div class="calendar-container">
+                <h3>March 2024</h3>
+                <div class="calendar">
+                    <!-- Calendar dates for March -->
+                    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+                    <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+                    <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+                    <div style="background-color: #A4978E;">22</div><div>23</div><div>24</div><div>25</div><div>26</div><div style="background-color: #A4978E;">27</div><div>28</div>
+                    <div>29</div><div>30</div><div>31</div>
+                </div>
+                <h3>April 2024</h3>
+                <div class="calendar">
+                    <!-- Calendar dates for April -->
+                    <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+                    <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+                    <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+                    <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+                    <div>29</div><div>30</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = 'screen3.html'; 
+        }
+
+        function toggleComplete(button) {
+            const listItem = button.parentElement;
+            const textInput = listItem.querySelector('input[type="text"]');
+            const isCompleted = textInput.classList.toggle('completed');
+
+            button.textContent = isCompleted ? 'Completed✔' : 'Ongoing...';
+
+            // Update the progress bar
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const tasks = document.querySelectorAll('#todo-list li');
+            const completedTasks = document.querySelectorAll('#todo-list .completed').length;
+            const progress = (completedTasks / tasks.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivation and Mindfulness</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #FFFFFF; /* Changed background color to white */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .phone-container {
+            width: 300px;
+            height: 600px;
+            background-color: #B69B87;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%; /* Make header take full width */
+        }
+        .home-button {
+            background-color: #8A6B5A;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 0;
+        }
+        .home-button img {
+            width: 15px;
+            height: 15px;
+        }
+        h2 {
+            color: #f0ede7;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1; /* Allow title to grow and center */
+        }
+        .quote-container, .music-container, .mindfulness-container {
+            background-color: #EDD3C2;
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .quote {
+            font-style: italic;
+            font-size: 14px;
+            color: #5A3E31;
+        }
+        .music-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #A67E67;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            cursor: pointer; /* Add cursor pointer to indicate clickability */
+        }
+        .music-controls {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .music-controls img {
+            width: 20px;
+            height: 20px;
+        }
+        .video-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .video-buttons button {
+            background-color: #8A6B5A;
+            border: none;
+            border-radius: 10px;
+            padding: 5px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            width: 30%;
+        }
+        .video-buttons button:hover {
+            background-color: #A67E67;
+        }
+        .video-container {
+            margin-top: 10px;
+            width: 100%;
+            display: none;
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+        }
+        /* Styles for the mini music player */
+        .mini-music-player {
+            width: 200px;
+            height: 100px;
+            background-color: #EDD3C2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 50%; /* Position in the middle */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        .close-button {
+            background-color: #8A6B5A;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .mini-music-player a {
+            text-decoration: none;
+            color: #5A3E31;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="header">
+            <button class="home-button" onclick="goHome()">
+                <img src="https://img.icons8.com/ios-glyphs/30/000000/home.png" alt="Home">
+            </button>
+            <h2>Motivation and Mindfulness</h2>
+        </div>
+
+        <div class="quote-container">
+            <p class="quote" id="quote">Loading quote...</p>
+        </div>
+
+        <div class="music-container">
+            <h3>Calming Music</h3>
+            <div class="music-icon" onclick="showMusicPlayer()">
+                <img src="https://img.icons8.com/ios-filled/50/000000/musical-notes.png" alt="Music">
+            </div>
+        </div>
+
+        <div class="mindfulness-container">
+            <h3>Mindfulness</h3>
+            <div class="video-buttons">
+                <button onclick="showVideo(1)">Video 1</button>
+                <button onclick="showVideo(2)">Video 2</button>
+                <button onclick="showVideo(3)">Video 3</button>
+            </div>
+            <div class="video-container" id="video1">
+                <iframe src="https://www.youtube.com/embed/O29e4rRMrV4" title="Mindfulness Video 1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <div class="video-container" id="video2">
+                <iframe src="https://www.youtube.com/embed/SEfs5TJZ6Nk" title="Mindfulness Video 2" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <div class="video-container" id="video3">
+                <iframe src="https://www.youtube.com/embed/ZToicYcHIOU" title="Mindfulness Video 3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="mini-music-player" id="miniMusicPlayer">
+        <button class="close-button" onclick="hideMusicPlayer()">X</button>
+        <h4><a href="https://music.youtube.com/" target="_blank">Now Playing</a></h4>
+        <p><a href="https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC" target="_blank">Relaxing Music</a></p>
+    </div>
+
+    <script>
+        const quotes = [
+            "“Everyone’s greatest weakness is giving up, don’t give up until you succeed”",
+            "“Success is not final, failure is not fatal: It is the courage to continue that counts.”",
+            "“The only way to do great work is to love what you do.”",
+            "“You are never too old to set another goal or to dream a new dream.”",
+            "“Believe you can and you're halfway there.”"
+        ];
+
+        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+        function goHome() {
+            window.location.href = 'screen3.html'; // Placeholder for the actual home page URL
+        }
+
+        function showVideo(videoNumber) {
+            // Hide all videos first
+            document.getElementById('video1').style.display = 'none';
+            document.getElementById('video2').style.display = 'none';
+            document.getElementById('video3').style.display = 'none';
+
+            // Show the selected video
+            document.getElementById('video' + videoNumber).style.display = 'block';
+        }
+
+        function showMusicPlayer() {
+            document.getElementById('miniMusicPlayer').style.display = 'flex'; // Show the mini music player
+        }
+
+        function hideMusicPlayer() {
+            document.getElementById('miniMusicPlayer').style.display = 'none'; // Hide the mini music player
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .phone-container {
+            width: 300px;
+            height: 600px;
+            background-color: #D3BDB0;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .container {
+            width: 100%;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #A78A7F;
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 16px;
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .search-bar .icon {
+            background: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .section {
+            background-color: #A78A7F;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .section p {
+            margin: 0;
+            font-size: 16px;
+        }
+        .section .arrow {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .todo-list {
+            background-color: #A78A7F;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .todo-list h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+        .todo-list ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 0;
+            font-size: 16px;
+        }
+        .todo-list ul li {
+            margin-bottom: 5px;
+        }
+        .timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .timer .circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            background: conic-gradient(#8D6E63 100%, #423E3A 0%);
+        }
+        .timer .circle #time {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #423E3A;
+            text-align: center;
+            width: 100%;
+        }
+        .timer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .timer-buttons button {
+            padding: 5px 10px;
+            background-color: #8D6E63;
+            color: #D3BDB0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .timer-buttons button:disabled {
+            background-color: #735751;
+            cursor: not-allowed;
+        }
+        .timer .arrow {
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="container">
+            <div class="search-bar" id="search-bar">
+                <input type="text" placeholder="Search">
+                <div class="icon">🔍</div>
+            </div>
+            
+            <!-- To-Do List Section -->
+            <div class="todo-list" onclick="redirectTo('screen4.html')">
+                <div>
+                    <h3>To-do:</h3>
+                    <ul>
+                        <li>English Assignment</li>
+                        <li>Math Worksheet</li>
+                        <li>Biology Presentation</li>
+                        <li>Study for Geography Test</li>
+                        <li>Medical Science</li>
+                    </ul>
+                </div>
+                <div class="arrow">➡️</div>
+            </div>
+
+            <div class="section" onclick="redirectTo('screen5.html')">
+                <p>Motivation Helpers</p>
+                <div class="arrow">➡️</div>
+            </div>
+            
+            <!-- Timer Section -->
+            <div class="timer">
+                <div class="circle" id="circle">
+                    <div id="time">05:00</div>
+                </div>
+                <div class="timer-buttons">
+                    <button id="startButton" onclick="startTimer()">Start</button>
+                    <button id="stopButton" onclick="stopTimer()" disabled>Stop</button>
+                    <button id="resetButton" onclick="resetTimer()">Reset</button>
+                </div>
+                <button onclick="setTime()">Set Time</button>
+            </div>
+            
+            <div class="section" onclick="window.location.href='https://aphs.sentral.com.au/s-wWQvVd/portal/#!/news/notices'">
+                <p>School News</p>
+                <div class="arrow">➡️</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let timeInput = document.getElementById("time");
+        let startButton = document.getElementById("startButton");
+        let stopButton = document.getElementById("stopButton");
+        let circle = document.getElementById("circle");
+
+        let time = timeInput.textContent.split(":");
+        let minutes = parseInt(time[0]);
+        let seconds = parseInt(time[1]);
+        let initialMinutes = minutes;
+
+    function updateGradient() {
+    let remainingTime = minutes * 60 + seconds;
+    let totalTime = initialMinutes * 60;
+    let percentage = remainingTime / totalTime;
+
+    let lightness = 55 + (1 - percentage) * 30; // Adjusts the lightness of the gradient
+    let gradient = `conic-gradient(hsl(25, 40%, ${lightness}%) ${percentage * 360}deg, #8D5B4C ${percentage * 360}deg)`;
+
+    circle.style.background = gradient;
+}
+
+
+
+        function startTimer() {
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            timer = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(timer);
+                        startButton.disabled = false;
+                        stopButton.disabled = true;
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+
+                timeInput.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                updateGradient();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            minutes = initialMinutes;
+            seconds = 0;
+            timeInput.textContent = `${String(minutes).padStart(2, '0')}:00`;
+            updateGradient();
+        }
+
+        function setTime() {
+            let newTime = prompt("Enter new time in minutes:", minutes);
+            if (newTime !== null && !isNaN(newTime)) {
+                initialMinutes = parseInt(newTime);
+                resetTimer();
+            }
+        }
+
+        document.getElementById("search-bar").addEventListener("click", function() {
+            alert("Available pages: Home, Todo List and Calendar, Motivation Helpers, Study schedule, and School news");
+        });
+
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+
+        updateGradient();
+    </script>
+</body>
+
+<script>
+    // Array of available pages with corresponding HTML filenames
+    const pages = [
+        { name: 'Home', url: 'index.html' },
+        { name: 'Todo List', url: 'screen4.html' },
+        { name: 'Motivation Helpers', url: 'screen5.html' },
+        { name: 'School News', url: 'https://aphs.sentral.com.au/s-wWQvVd/portal/#!/news/notices' }
+        // Add more pages as needed
+    ];
+
+    function searchPages() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const page = pages.find(p => p.name.toLowerCase() === input);
+
+        if (page) {
+            window.location.href = page.url;
+        } else {
+            alert('Page not found. Please try searching for: Home, Todo List, Motivation Helpers, or School News.');
+        }
+    }
+
+    document.getElementById('search-bar').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevents form submission if enter is pressed
+        searchPages();
+    });
+</script>
+</body>
+</html>
